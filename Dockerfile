@@ -23,6 +23,6 @@ ENV PATH $EPICS_BASE/bin/linux-x86_64/:$PATH
 COPY designer_plugin.py /pydm/designer_plugin.py
 ENV PYQTDESIGNERPATH /pydm/
 
-RUN pip3 install git+https://github.com/slaclab/pydm.git
+RUN pip3 install pydm==1.6.1
 
-RUN cd ~
+WORKDIR /root/
