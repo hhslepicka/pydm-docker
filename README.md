@@ -41,6 +41,5 @@ $ IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 $ xhost + $IP
 $ docker run -ti \
 -e DISPLAY=$IP:0 \
--v <APP_DIR>:/python \
 -t pydm
 ```

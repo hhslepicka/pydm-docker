@@ -1,13 +1,12 @@
 FROM ubuntu:18.04
 
 # Install system tools
-RUN apt-get update
-RUN apt-get -y install  wget git libreadline6-dev \
-                        cmake python3 python3-dev \
-                        python3-pip python3-pyqt5 \
-                        libqt5svg5* qttools5-dev-tools \
-                        pyqt5-dev-tools python3-pyqt5.qtsvg \
-                        qt5-default
+RUN apt-get update && \
+    apt-get -y install  g++ wget git libreadline6-dev cmake \
+                        python3-pyqt5 python3-pip \
+                        python3-pyqt5.qtsvg qttools5-dev-tools  qt5-default && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install EPICS base
 RUN mkdir epics
