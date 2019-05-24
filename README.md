@@ -32,7 +32,7 @@ $ docker run -ti \
 
 First install XQuartz. Then run it from the command line using `open -a XQuartz`.
 In the XQuartz preferences, go to the “Security” tab and make sure you’ve got
-“Allow connections from network clients” ticked.
+“Allow connections from network clients” ticked. Restart XQuartz.
 
 Now run:
 
@@ -41,5 +41,5 @@ $ IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 $ xhost + $IP
 $ docker run -ti \
 -e DISPLAY=$IP:0 \
--t pydm
+pydm/pydm:1.6.1 pydm
 ```
