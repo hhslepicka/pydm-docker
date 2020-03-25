@@ -136,6 +136,6 @@ You can build the container, for example, like this:
 
 ```
 $ git clone https://github.com/hhslepicka/pydm-docker.git
-$ cd pydm-docker.git
+$ cd pydm-docker
 $ docker build -t pydm/pydm .
 ```
