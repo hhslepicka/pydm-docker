@@ -14,6 +14,7 @@ RUN apt-get update && \
 
 COPY designer_plugin.py /pydm/designer_plugin.py
 ENV PYQTDESIGNERPATH /pydm/
+ENV XDG_RUNTIME_DIR /tmp/
 
 RUN python3 -m pip install --no-cache-dir epicscorelibs pydm==1.9.0
 

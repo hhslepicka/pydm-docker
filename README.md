@@ -24,13 +24,13 @@ $ docker run --rm \
 
 First install XQuartz. Then run it from the command line using `open -a XQuartz`.
 In the XQuartz preferences, go to the “Security” tab and make sure you’ve got
-“Allow connections from network clients” ticked.
+“Allow connections from network clients” ticked. Restart XQuartz.
 
 ```
 $ docker pull pydm/pydm:latest
 $ IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 $ xhost + $IP
-$ docker run --rm -ti -e DISPLAY=$IP:0 pydm:pydm
+$ docker run --rm -ti -e DISPLAY=$IP:0 pydm/pydm
 ```
 
 #### Windows:
@@ -109,16 +109,6 @@ $ docker run \
 -t pydm:pydm
 ```
 
-## How to build the container
-
-You can build the container, for example, like this:
-
-```
-$ git clone https://github.com/hhslepicka/pydm-docker.git
-$ cd pydm-docker.git
-$ docker build -t pydm/pydm .
-```
-
 ## Useful aliases
 
 Here are some useful aliases for Linux and macOS to launch QtDesigner and PyDM
@@ -138,4 +128,14 @@ above.
 alias pydm='docker run -d -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm pydm'
 alias designer='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm designer'
 alias pydmbash='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm'
+```
+
+## How to build the container
+
+You can build the container, for example, like this:
+
+```
+$ git clone https://github.com/hhslepicka/pydm-docker.git
+$ cd pydm-docker.git
+$ docker build -t pydm/pydm .
 ```
