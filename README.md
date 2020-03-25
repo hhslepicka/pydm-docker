@@ -11,13 +11,13 @@ order to properly forward X:
 #### Linux:
 ```
 $ docker pull pydm/pydm:latest
-$ docker run --rm \
+$ docker run --rm -ti \
 -u $(id -u):$(id -g) \
 -e DISPLAY=unix$DISPLAY \
 -v "/tmp/.X11-unix:/tmp/.X11-unix" \
 -v "/etc/group:/etc/group:ro" \
 -v "/etc/passwd:/etc/passwd:ro" \
--t pydm/pydm
+pydm/pydm
 ```
 
 #### MacOS:
@@ -100,13 +100,13 @@ macOS I couldn't find a way to accomplish that yet.
 ```
 $ docker pull pydm/pydm:latest
 $ docker run \
---rm \
+--rm -ti \
 -u $(id -u):$(id -g) \
 -e DISPLAY=unix$DISPLAY \
 -v "/tmp/.X11-unix:/tmp/.X11-unix" \
 -v "/etc/group:/etc/group:ro" \
 -v "/etc/passwd:/etc/passwd:ro" \
--t pydm/pydm
+pydm/pydm
 ```
 
 ## Useful aliases
@@ -119,6 +119,7 @@ at the docker container sharing the current folder.
 alias pydm='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm/pydm pydm'
 alias designer='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm/pydm designer'
 alias pydmbash='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm/pydm'
+alias pydmipython='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm/pydm ipython'
 ```
 
 #### macOS
@@ -128,6 +129,7 @@ above.
 alias pydm='docker run -d -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm pydm'
 alias designer='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm designer'
 alias pydmbash='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm'
+alias pydmipython='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm ipython'
 ```
 
 ## How to build the container

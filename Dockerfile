@@ -4,13 +4,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install system tools
 RUN apt-get update && \
-    apt-get -y install --no-install-recommends python3-pip python3-setuptools \
-                        python3-pyqt5 python3-pyqt5.qtsvg qttools5-dev-tools \
-                        qt5-default \
-                        fontconfig fontconfig-config fonts-dejavu-core \
-                        xfonts-100dpi xfonts-encodings xfonts-utils && \
+    apt-get -y install --no-install-recommends ipython3 python3-pip \
+    python3-setuptools python3-pyqt5 python3-pyqt5.qtsvg qttools5-dev-tools \
+    qt5-default \
+    fontconfig fontconfig-config fonts-dejavu-core \
+    xfonts-100dpi xfonts-encodings xfonts-utils && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
+RUN ln -s /usr/bin/ipython3 /usr/bin/ipython
 
 COPY designer_plugin.py /pydm/designer_plugin.py
 ENV PYQTDESIGNERPATH /pydm/
