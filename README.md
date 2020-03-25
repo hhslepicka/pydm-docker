@@ -11,7 +11,7 @@ order to properly forward X:
 #### Linux:
 ```
 $ docker pull pydm/pydm:latest
-$ docker run \
+$ docker run --rm \
 -u $(id -u):$(id -g) \
 -e DISPLAY=unix$DISPLAY \
 -v "/tmp/.X11-unix:/tmp/.X11-unix" \
@@ -30,7 +30,7 @@ In the XQuartz preferences, go to the “Security” tab and make sure you’ve 
 $ docker pull pydm/pydm:latest
 $ IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 $ xhost + $IP
-$ docker run -ti -e DISPLAY=$IP:0 pydm:pydm
+$ docker run --rm -ti -e DISPLAY=$IP:0 pydm:pydm
 ```
 
 #### Windows:
@@ -40,7 +40,7 @@ First install XQuartz. In the XQuartz preferences, go to the “Security” tab 
 
 ```
 $ docker pull pydm/pydm:latest
-$ docker run -ti -e DISPLAY=host.docker.internal:0.0 pydm:pydm
+$ docker run --rm -ti -e DISPLAY=host.docker.internal:0.0 pydm:pydm
 ```
 
 ## Sharing a folder with the container
@@ -53,7 +53,7 @@ E.g.: To share a folder on linux `/tmp/screens` with the container and have it a
 you need to specify `-v /tmp/screens:/pydm/workspace`.
 
 ```
-$ docker run -ti -e DISPLAY=$IP:0 -v /tmp/screens:/pydm/workspace pydm:pydm
+$ docker run --rm -ti -e DISPLAY=$IP:0 -v /tmp/screens:/pydm/workspace pydm:pydm
 ```
 
 One recommendation is to use `/pydm/workspace` when sharing folders with this container.
@@ -76,7 +76,7 @@ to be executed such as `pydm` or `designer`.
 E.g: Opening PyDM:
 
 ```
-$ docker run -ti -e DISPLAY=$IP:0 pydm:pydm pydm
+$ docker run --rm -ti -e DISPLAY=$IP:0 pydm:pydm pydm
 ```
 
 The `t` option will allocate a pseudo-TTY, the `i` is for interactive and will
@@ -100,6 +100,7 @@ macOS I couldn't find a way to accomplish that yet.
 ```
 $ docker pull pydm/pydm:latest
 $ docker run \
+--rm \
 -u $(id -u):$(id -g) \
 -e DISPLAY=unix$DISPLAY \
 -v "/tmp/.X11-unix:/tmp/.X11-unix" \
@@ -116,4 +117,25 @@ You can build the container, for example, like this:
 $ git clone https://github.com/hhslepicka/pydm-docker.git
 $ cd pydm-docker.git
 $ docker build -t pydm/pydm .
+```
+
+## Useful aliases
+
+Here are some useful aliases for Linux and macOS to launch QtDesigner and PyDM
+at the docker container sharing the current folder.
+
+#### Linux
+```
+alias pydm='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm:pydm pydm'
+alias designer='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm:pydm designer'
+alias pydmbash='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm:pydm'
+```
+
+#### macOS
+Remember to also define `IP` and register it with `xhost + ${IP}` as instructed
+above.
+```
+alias pydm='docker run -d -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm pydm'
+alias designer='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm designer'
+alias pydmbash='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=${IP}:0 -v ${PWD}:/pydm/workspace pydm/pydm'
 ```

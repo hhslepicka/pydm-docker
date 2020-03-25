@@ -1,27 +1,22 @@
-FROM ubuntu:18.04
+FROM ubuntu:19.10
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install system tools
 RUN apt-get update && \
-    apt-get -y install  g++ wget git libreadline6-dev cmake \
-                        python3-pyqt5 python3-pip \
-                        python3-pyqt5.qtsvg qttools5-dev-tools  qt5-default && \
+    apt-get -y install --no-install-recommends python3-pip python3-setuptools \
+                        python3-pyqt5 python3-pyqt5.qtsvg qttools5-dev-tools \
+                        qt5-default \
+                        fontconfig fontconfig-config fonts-dejavu-core \
+                        xfonts-100dpi xfonts-encodings xfonts-utils && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# Install EPICS base
-RUN mkdir epics
-WORKDIR epics
-RUN wget https://epics.anl.gov/download/base/base-3.15.5.tar.gz
-RUN tar zxf base-3.15.5.tar.gz
-WORKDIR base-3.15.5
-RUN make clean && make && make install
-ENV EPICS_BASE /epics/base-3.15.5
-ENV PYEPICS_LIBCA /epics/base-3.15.5/lib/linux-x86_64/libca.so
-ENV PATH $EPICS_BASE/bin/linux-x86_64/:$PATH
 
 COPY designer_plugin.py /pydm/designer_plugin.py
 ENV PYQTDESIGNERPATH /pydm/
 
-RUN pip3 install pydm==1.6.1
+RUN python3 -m pip install --no-cache-dir epicscorelibs pydm==1.9.0
 
-WORKDIR /root/
+RUN mkdir -p /pydm/workspace
+RUN echo 'export PS1="\u@docker:\w\\$"' > /etc/bash.bashrc
+WORKDIR /pydm/workspace
