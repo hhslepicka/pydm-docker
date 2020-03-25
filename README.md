@@ -35,12 +35,12 @@ $ docker run --rm -ti -e DISPLAY=$IP:0 pydm/pydm
 
 #### Windows:
 
-First install XQuartz. In the XQuartz preferences, go to the “Security” tab and make sure you’ve got
-“Allow connections from network clients” ticked.
+First, install an X server such as the one available in MobaXterm. Run Moba and ensure that the X server is running.
+Then:
 
 ```
-$ docker pull pydm/pydm:latest
-$ docker run --rm -ti -e DISPLAY=host.docker.internal:0.0 pydm/pydm
+C:\> docker pull pydm/pydm:latest
+C:\> docker run --rm -ti -e DISPLAY=host.docker.internal:0.0 pydm/pydm
 ```
 
 ## Sharing a folder with the container
