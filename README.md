@@ -17,7 +17,7 @@ $ docker run --rm \
 -v "/tmp/.X11-unix:/tmp/.X11-unix" \
 -v "/etc/group:/etc/group:ro" \
 -v "/etc/passwd:/etc/passwd:ro" \
--t pydm:pydm
+-t pydm/pydm
 ```
 
 #### MacOS:
@@ -40,7 +40,7 @@ First install XQuartz. In the XQuartz preferences, go to the “Security” tab 
 
 ```
 $ docker pull pydm/pydm:latest
-$ docker run --rm -ti -e DISPLAY=host.docker.internal:0.0 pydm:pydm
+$ docker run --rm -ti -e DISPLAY=host.docker.internal:0.0 pydm/pydm
 ```
 
 ## Sharing a folder with the container
@@ -53,7 +53,7 @@ E.g.: To share a folder on linux `/tmp/screens` with the container and have it a
 you need to specify `-v /tmp/screens:/pydm/workspace`.
 
 ```
-$ docker run --rm -ti -e DISPLAY=$IP:0 -v /tmp/screens:/pydm/workspace pydm:pydm
+$ docker run --rm -ti -e DISPLAY=$IP:0 -v /tmp/screens:/pydm/workspace pydm/pydm
 ```
 
 One recommendation is to use `/pydm/workspace` when sharing folders with this container.
@@ -76,7 +76,7 @@ to be executed such as `pydm` or `designer`.
 E.g: Opening PyDM:
 
 ```
-$ docker run --rm -ti -e DISPLAY=$IP:0 pydm:pydm pydm
+$ docker run --rm -ti -e DISPLAY=$IP:0 pydm/pydm pydm
 ```
 
 The `t` option will allocate a pseudo-TTY, the `i` is for interactive and will
@@ -106,7 +106,7 @@ $ docker run \
 -v "/tmp/.X11-unix:/tmp/.X11-unix" \
 -v "/etc/group:/etc/group:ro" \
 -v "/etc/passwd:/etc/passwd:ro" \
--t pydm:pydm
+-t pydm/pydm
 ```
 
 ## Useful aliases
@@ -116,9 +116,9 @@ at the docker container sharing the current folder.
 
 #### Linux
 ```
-alias pydm='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm:pydm pydm'
-alias designer='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm:pydm designer'
-alias pydmbash='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm:pydm'
+alias pydm='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm/pydm pydm'
+alias designer='docker run --rm -d -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm/pydm designer'
+alias pydmbash='docker run --rm -it -u $(id -u):$(id -g) -e DISPLAY=unix$DISPLAY  -v ${PWD}:/pydm/workspace -v "/tmp/.X11-unix:/tmp/.X11-unix" -v "/etc/group:/etc/group:ro" -v "/etc/passwd:/etc/passwd:ro" pydm/pydm'
 ```
 
 #### macOS
