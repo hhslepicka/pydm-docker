@@ -19,7 +19,7 @@ COPY designer_plugin.py /pydm/designer_plugin.py
 ENV PYQTDESIGNERPATH /pydm/
 ENV XDG_RUNTIME_DIR /tmp/
 
-RUN python3 -m pip install --no-cache-dir epicscorelibs pydm==1.9.0
+RUN python3 -m pip install --no-cache-dir epicscorelibs pydm==1.10.0
 
 RUN mkdir -p /pydm/workspace
 RUN echo 'export PS1="\u@docker:\w\\$"' > /etc/bash.bashrc
@@ -33,6 +33,6 @@ COPY --from=pydm/pydm-iocs:0.2.1 /root/epics/base/bin/linux-x86_64/caRepeater /u
 COPY --from=pydm/pydm-iocs:0.2.1 /usr/lib/x86_64-linux-gnu/libreadline.so /usr/lib/x86_64-linux-gnu/libreadline.so.7
 COPY --from=pydm/pydm-iocs:0.2.1 /usr/lib/x86_64-linux-gnu/libtinfo.so /usr/lib/x86_64-linux-gnu/libtinfo.so.5
 
-
+RUN ln -s -T /lib/x86_64-linux-gnu/libpython3.7m.so.1 /lib/x86_64-linux-gnu/libpython3.7m.so
 
 WORKDIR /pydm/workspace
